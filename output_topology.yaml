@@ -1,0 +1,28 @@
+name: output_topology
+topology:
+  nodes:
+    node0:
+      image: ghcr.io/nokia/srlinux
+      kind: srl
+    node1:
+      image: ghcr.io/nokia/srlinux
+      kind: srl
+    node2:
+      image: ghcr.io/nokia/srlinux
+      kind: srl
+    node3:
+      image: ghcr.io/nokia/srlinux
+      kind: srl
+  links:
+  - endpoints:
+    - node0:eth1
+    - node1:eth1
+  - endpoints:
+    - node0:eth1
+    - node2:eth1
+  - endpoints:
+    - node0:eth1
+    - node3:eth1
+  - endpoints:
+    - node1:eth1
+    - node3:eth1
