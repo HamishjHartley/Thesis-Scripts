@@ -1,0 +1,41 @@
+import networkx as nx
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+
+# Load the GML file
+gml_file = 'C:/Users/theha/OneDrive/Desktop/Masters Project/Scripts/topology zoo/Geant2012.gml'
+
+G = nx.read_gml(gml_file)
+
+
+# Extract node positions (latitude and longitude)
+positions = {node: (data['Longitude'], data['Latitude']) for node, data in G.nodes(data=True)}
+
+# Initialize Basemap
+plt.figure(figsize=(15, 10))
+m = Basemap(projection='merc', llcrnrlat=30, urcrnrlat=72, llcrnrlon=-25, urcrnrlon=45, resolution='l')
+
+# Draw map details
+m.drawcoastlines()
+m.drawcountries()
+m.drawmapboundary(fill_color='aqua')
+m.fillcontinents(color='lightgray', lake_color='aqua')
+
+# Plot the nodes
+for node, (lon, lat) in positions.items():
+    x, y = m(lon, lat)
+    plt.plot(x, y, 'bo', markersize=6)
+    plt.text(x, y, G.nodes[node]['Country'], fontsize=10, ha='right')
+
+# Optional: Draw edges if you want to see the connections
+for edge in G.edges():
+    src, dst = edge
+    lon1, lat1 = positions[src]
+    lon2, lat2 = positions[dst]
+    x1, y1 = m(lon1, lat1)
+    x2, y2 = m(lon2, lat2)
+    plt.plot([x1, x2], [y1, y2], 'r-', linewidth=1)
+
+# Display the map
+plt.title("GEANT 2012 Network Nodes - Geographical Orientation")
+plt.show()
