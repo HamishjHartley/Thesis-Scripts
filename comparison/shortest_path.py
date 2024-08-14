@@ -31,7 +31,7 @@ G1 = nx.erdos_renyi_graph(23, 0.1) # Set to the same number of nodes as janet
 G2 = nx.barabasi_albert_graph(23, 5) # Set to the same number of nodes as janet
 
 # Real-world graph
-janet_backbone = 'C:/Users/theha/OneDrive/Desktop/Masters Project/Scripts/topology zoo/Janetbackbone.gml'
+janet_backbone = 'C:/Users/theha/OneDrive/Desktop/Masters Project/Scripts/Thesis-Scripts/topology zoo/Janetbackbone.gml'
 G_janet = nx.read_gml(janet_backbone)
 
 # Compute shortest path length distributions
@@ -39,9 +39,11 @@ lengths1 = shortest_path_length_distribution(G1)
 lengths2 = shortest_path_length_distribution(G2)
 lengths3 = shortest_path_length_distribution(G_janet)
 
+
+
 # Plot and compare the distributions
-# plot_distribution(lengths1, lengths2, lengths3,'G1 (Erdos-Renyi)', 'G2 (Barabasi-Albert)', 'G3 (Janet Backbone)')
+plot_distribution(lengths1, lengths2, lengths3,'G1 (Erdos-Renyi)', 'G2 (Barabasi-Albert)', 'G3 (Janet Backbone)')
 
 
-ks_stat, p_value = ks_2samp(lengths1, lengths2)
-print(f"KS Statistic: {ks_stat}, p-value: {p_value}")
+#ks_stat, p_value = ks_2samp(lengths1, lengths2)
+#print(f"KS Statistic: {ks_stat}, p-value: {p_value}")

@@ -23,7 +23,6 @@ def parse_to_yml(graph : nx.graph, image, kind):
     output_file = "output_topology.yaml"
 
     #Define topology as a dictionary
-    # Define topology as an OrderedDict
     topology = OrderedDict({
         "name": "output_topology",
         "topology": OrderedDict({
@@ -59,5 +58,3 @@ def parse_to_yml(graph : nx.graph, image, kind):
 parse_to_yml(barabasi_albert_1, "ghcr.io/nokia/srlinux","srl")
 
 # Deployment of containerlab environment
-
-

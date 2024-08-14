@@ -40,7 +40,7 @@ graphs = [
     nx.barabasi_albert_graph(23, 5),
     nx.watts_strogatz_graph(23, 4, 0.1),
     nx.watts_strogatz_graph(23, 6, 0.3),
-    nx.read_gml('C:/Users/theha/OneDrive/Desktop/Masters Project/Scripts/topology zoo/Janetbackbone.gml')
+    nx.read_gml('C:/Users/theha/OneDrive/Desktop/Masters Project/Scripts/Thesis-Scripts/topology zoo/Janetbackbone.gml')
 ]
 
 labels = [
