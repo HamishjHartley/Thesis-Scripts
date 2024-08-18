@@ -85,19 +85,28 @@ def degree_correlation_matrix(G):
     
     return matrix
 
-def plot_degree_correlation_matrix(matrix, label):
-    plt.figure(figsize=(8, 6))
-    plt.imshow(matrix, origin='lower', cmap='Blues')
-    plt.colorbar(label='Number of Edges')
-    plt.xlabel('Degree of Node u')
-    plt.ylabel('Degree of Node v')
-    plt.title(f'Degree Correlation Matrix: {label}')
-    plt.grid(False)
+def plot_degree_correlation_matrices(graphs, labels):
+    fig, axes = plt.subplots(2, 3, figsize=(15, 10))
+    axes = axes.flatten()  # Flatten the 2D array of axes into a 1D array for easy indexing
+
+    for i, (G, label) in enumerate(zip(graphs, labels)):
+        matrix = degree_correlation_matrix(G)
+        ax = axes[i]
+        cax = ax.imshow(matrix, origin='lower', cmap='Blues')
+        ax.set_title(label)
+        ax.set_xlabel('Degree of Node u')
+        ax.set_ylabel('Degree of Node v')
+        ax.grid(False)
+    
+    # Adjust spacing between plots and add a colorbar
+    fig.tight_layout()
+    fig.colorbar(cax, ax=axes, orientation='vertical', fraction=0.02, pad=0.02)
     plt.show()
 
 
-# Calculate the degree correlation matrix
-matrix = degree_correlation_matrix(Bbnplanet)
+# List of graphs and labels
+graphs = [ER1_6, BA2_6, ER1_13, BA2_13, ER1_20, BA2_20]
+labels = ['ER1_6', 'BA2_6', 'ER1_13', 'BA2_13', 'ER1_20', 'BA2_20']
 
-# Plot the degree correlation matrix
-plot_degree_correlation_matrix(matrix, 'ER1_27')
+# Plot the degree correlation matrices
+plot_degree_correlation_matrices(graphs, labels)
