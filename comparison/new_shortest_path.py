@@ -60,20 +60,23 @@ def save_graphs_to_gml(G1, G2, G3, base_filename):
     nx.write_gml(G3, file3)
 
 # Generate two graphs
-G1 = nx.erdos_renyi_graph(23, 0.3)  # Set to the same number of nodes as janet
-G2 = nx.barabasi_albert_graph(23, 5)  # Set to the same number of nodes as janet
+G1 = nx.erdos_renyi_graph(6, 0.3)  # Set to the same number of nodes as janet
+G2 = nx.barabasi_albert_graph(6, 5)  # Set to the same number of nodes as janet
 
 # Real-world graph
 janet_backbone = 'C:/Users/theha/OneDrive/Desktop/Masters Project/Scripts/Thesis-Scripts/topology zoo/Janetbackbone.gml'
 G_janet = nx.read_gml(janet_backbone)
 
+napnet_path = 'C:/Users/theha/OneDrive/Desktop/Masters Project/Scripts/Thesis-Scripts/topology zoo/napnet.gml'
+G_napnet = nx.read_gml(napnet_path)
+
 # Compute shortest path length distributions
 lengths1 = shortest_path_length_distribution(G1)
 lengths2 = shortest_path_length_distribution(G2)
-lengths3 = shortest_path_length_distribution(G_janet)
+lengths3 = shortest_path_length_distribution(G_napnet)
 
 # Plot and compare the distributions along with the graphs
-plot_graphs_and_distribution(G1, G2, G_janet, lengths1, lengths2, lengths3, 'G1 (Erdos-Renyi)', 'G2 (Barabasi-Albert)', 'G3 (Janet Backbone)')
+plot_graphs_and_distribution(G1, G2, G_napnet, lengths1, lengths2, lengths3, 'G1 (Erdos-Renyi)', 'G2 (Barabasi-Albert)', 'G3 (Napnet)')
 
 # Save the generated graphs to GML format with unique filenames
-save_graphs_to_gml(G1, G2, G_janet, 'graph')
+save_graphs_to_gml(G1, G2, G_napnet, 'graph')
