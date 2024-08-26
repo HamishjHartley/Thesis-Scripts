@@ -1,0 +1,33 @@
+name: thesislab
+
+topology:
+  nodes:
+    PC1:
+      kind: generic_vm
+      image: vrnetlab/vr-ubuntu:jammy
+    node1:
+      kind: nokia_srlinux
+      image: ghcr.io/nokia/srlinux
+    node2:
+      kind: nokia_srlinux
+      image: ghcr.io/nokia/srlinux
+    node3:
+      kind: nokia_srlinux
+      image: ghcr.io/nokia/srlinux
+    node4:
+      kind: nokia_srlinux
+      image: ghcr.io/nokia/srlinux
+    node5:
+      kind: nokia_srlinux
+      image: ghcr.io/nokia/srlinux
+    node6:
+      kind: nokia_srlinux
+      image: ghcr.io/nokia/srlinux
+
+  links:
+    - endpoints: ["node1:e1-1","PC1:eth1"]
+    - endpoints: ["node1:e1-2","node2:e1-1"]
+    - endpoints: ["node2:e1-2", "node3:e1-1"]
+    - endpoints: ["node3:e1-2", "node4:e1-1"]
+    - endpoints: ["node4:e1-2", "node5:e1-1"]
+    - endpoints: ["node4:e1-3", "node6:e1-1"]
