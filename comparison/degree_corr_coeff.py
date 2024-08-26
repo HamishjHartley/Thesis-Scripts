@@ -1,5 +1,4 @@
 import networkx as nx
-import numpy as np
 import matplotlib.pyplot as plt
 
 #Load in graphs for comparison
@@ -65,48 +64,35 @@ Vision = nx.read_gml(path+"VisionNet.gml")
 Bbnplanet = nx.read_gml(path+"Bbnplanet.gml")
 Integra = nx.read_gml(path+"Integra.gml")
 
-def degree_correlation_matrix(G):
-    # Get the degree of each node
-    degrees = dict(G.degree())
-    
-    # Get the maximum degree to define the size of the matrix
-    max_degree = max(degrees.values())
-    
-    # Initialize a matrix of zeros with dimensions (max_degree+1) x (max_degree+1)
-    matrix = np.zeros((max_degree+1, max_degree+1), dtype=int)
-    
-    # Fill in the matrix with degree correlations
-    for u, v in G.edges():
-        deg_u = degrees[u]
-        deg_v = degrees[v]
-        matrix[deg_u][deg_v] += 1
-        if deg_u != deg_v:  # Ensure symmetry
-            matrix[deg_v][deg_u] += 1
-    
-    return matrix
+import networkx as nx
+import matplotlib.pyplot as plt
 
-def plot_degree_correlation_matrices(graphs, labels):
-    fig, axes = plt.subplots(2, 3, figsize=(15, 10))
-    axes = axes.flatten()  # Flatten the 2D array of axes into a 1D array for easy indexing
+def calculate_degree_correlation_coefficient(G):
+    # Calculate the degree correlation (assortativity) coefficient
+    return nx.degree_assortativity_coefficient(G)
 
-    for i, (G, label) in enumerate(zip(graphs, labels)):
-        matrix = degree_correlation_matrix(G)
-        ax = axes[i]
-        cax = ax.imshow(matrix, origin='lower', cmap='Blues')
-        ax.set_title(label)
-        ax.set_xlabel('Degree of Node u')
-        ax.set_ylabel('Degree of Node v')
-        ax.grid(False)
+def plot_degree_correlation_coefficients(graphs, labels):
+    coefficients = [calculate_degree_correlation_coefficient(G) for G in graphs]
     
-    # Adjust spacing between plots and add a colorbar
-    fig.tight_layout()
-    fig.colorbar(cax, ax=axes, orientation='vertical', fraction=0.02, pad=0.02)
+    plt.figure(figsize=(10, 6))
+    bars = plt.bar(labels, coefficients, color='skyblue')
+    plt.xlabel('Graphs')
+    plt.ylabel('Degree Correlation Coefficient')
+    plt.title('Degree Correlation Coefficients comparison')
+    plt.ylim(-1, 1)  # Assortativity coefficient ranges from -1 to 1
+    plt.grid(True)
+
+    # Add text annotations to display the value of each bar
+    for bar, coef in zip(bars, coefficients):
+        yval = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width()/2, yval, f'{coef:.2f}', 
+                 ha='center', va='bottom', fontsize=12, color='black')
+    
     plt.show()
 
-
 # List of graphs and labels
-graphs = [ER1_27, ER2_27, BA1_27, BA2_27, Bbnplanet,Integra]
-labels = ['Erdos-Renyi, 27 nodes, p=0.3', 'Erdos-Renyi, 27 nodes, p=0.5', 'Barabasi-Albert, 27 nodes, m=2', 'Barabasi-Albert, 27 nodes, m=3', 'Bbnplanet', 'Integra']
+graphs = [ER1_27, ER2_27, BA1_27, BA2_27, Bbnplanet, Integra]
+labels = ['Erdos-Renyi 1', 'Erdos-Renyi 2', 'Barabasi-Albert 1', 'Barabasi-Albert, 2', 'Bbnplanet', 'Integra']
 
-# Plot the degree correlation matrices
-plot_degree_correlation_matrices(graphs, labels)
+# Plot the degree correlation coefficients
+plot_degree_correlation_coefficients(graphs, labels)
